@@ -9,6 +9,8 @@ class Page{
 	private $tpl;
 	private $options = [];
 	private $defauts =[
+		"header"=>true,
+		"footer"=>true,
 		"data"=>[]
 	];
 
@@ -19,7 +21,7 @@ class Page{
 		$config = 
 			array(
 				"tpl_dir"       => $_SERVER["DOCUMENT_ROOT"].$tpl_dir, 
-				"cache_dir"     => $_SERVER["DOCUMENT_ROOT"]."views-cache",
+				"cache_dir"     => $_SERVER["DOCUMENT_ROOT"]."/views-cache/",
 				"debug"         => false // set to false to improve the speed
 			);
 
@@ -29,7 +31,7 @@ class Page{
 
 		$this->setData($this->options["data"]);
 
-		$this->tpl->draw("header");
+		if ($this->options["header"] === true) $this->tpl->draw("header");
 	}
 
 	private function setData($data = array())
@@ -48,6 +50,6 @@ class Page{
 
 	public function __destruct(){
 
-		$this->tpl->draw("footer");
+		if ($this->options["header"] === true) $this->tpl->draw("footer");
 	}
 }
